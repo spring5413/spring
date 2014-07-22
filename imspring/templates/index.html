@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>imspring</title>
+		<script type="text/javascript" src="{{STATIC_URL}}js/extra/jquery.js"></script>
+	</head>
+	<body>
+		index.html
+		<script type="text/javascript">
+			$(function(){
+				$.ajax({
+					url:"iapi/user/login/",
+					type:"POST",
+					data:{username:"spring",password:"1"},
+					statusCode:{
+						
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

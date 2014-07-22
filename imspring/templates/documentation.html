@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>webapp api</title>
+	<style type="text/css">
+		body {
+			background: #fffff0;
+			font: 1em "Helvetica Neue", Verdana;
+			padding: 0 0 0 25px;
+		}
+		.green{
+			color: green;
+		}
+		.method{
+			color:#E79952;
+		}
+		.read{
+			color:#4DAB58;
+		}
+		.create{
+			color:#C90;
+		}
+		.update{
+			color:#36F;
+		}
+		.delete{
+			color:#C30;
+		}
+	</style>
+</head>
+<body>
+		{% for doc in docs %}
+		
+			<h3>{{ doc.name|cut:"Handler" }}:</h3>
+
+			<p>
+				{{ doc.doc|default:"" }}
+			</p>
+			
+			<p>
+				<span class="green">Accepted methods: </span>{% for meth in doc.allowed_methods %}<b>{{ meth }}</b>{% if not forloop.last %}, {% endif %}{% endfor %}
+			</p>
+					
+			<dl>
+				{% for method in doc.get_all_methods %}
+					{% if method.http_name in doc.allowed_methods %}
+					<dt>
+						<span class="method">method</span> <i><span class="{%if method.name == 'read' %}read{% endif %}{%if method.name == 'create' %}create{% endif %}{%if method.name == 'update' %}update{% endif %}{%if method.name == 'delete' %}delete{% endif %}">{{ method.name }}</span></i>({{ method.signature }}){% if method.stale %} <i>- inherited</i>{% else %}:{% endif %}
+					</dt>			
+										
+					{% if method.doc %}
+						<dd>
+							{{ method.doc|default:""|escape|linebreaks }}
+						<dd>
+					{% endif %}
+					{% endif %}
+				{% endfor %}
+			</dl>
+		<hr/>
+		{% endfor %}
+</body>
+</html>
